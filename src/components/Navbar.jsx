@@ -1,9 +1,262 @@
-import React from 'react'
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import BookIcon from "@mui/icons-material/Book";
+import { CssBaseline } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { deepPurple } from "@mui/material/colors";
 
-const Navbar = () => {
-  return (
-    <div>Navbar</div>
-  )
+
+const pages = [
+	{
+		title: "Dashboard",
+		url: "/",
+	},
+	{
+		title: "About",
+		url: "/about/",
+	},
+];
+const settings = [
+  {
+    id:1,
+    title:"My Blogs",
+    url:"/my-blogs/"
+  },
+  {
+    id:2,
+    title:"Account",
+    url:"/profile/"
+  },
+  {
+    id:3,
+    title:"Login",
+    url:"/auth/"
+  },
+  {
+    id:4,
+    title:"Logout",
+    url:"/"
+  },
+  {
+    id:5,
+    title:"Register",
+    url:"/register"
+  },
+]
+
+
+function Navbar() {
+	const navigate = useNavigate();
+	const [anchorElNav, setAnchorElNav] = React.useState(null);
+	const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+	const handleOpenNavMenu = (event) => {
+		setAnchorElNav(event.currentTarget);
+	};
+	const handleOpenUserMenu = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
+
+	const handleCloseNavMenu = () => {
+		setAnchorElNav(null);
+	};
+
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
+
+	return (
+		<AppBar position="static" sx={{ bgcolor: deepPurple[100] }}>
+			<CssBaseline />
+			<Container maxWidth="xl">
+				<Toolbar disableGutters>
+					<BookIcon
+						sx={{
+							display: { xs: "none", md: "flex" },
+							mr: 1,
+							color: "grey",
+						}}
+					/>
+					<Typography
+						variant="h6"
+						noWrap
+						component="a"
+						onClick={() => navigate("/")}
+						sx={{
+							mr: 2,
+							display: { xs: "none", md: "flex" },
+							fontFamily: "monospace",
+							fontWeight: 700,
+							letterSpacing: ".3rem",
+							color: "black",
+							textDecoration: "none",
+							cursor: "pointer",
+						}}
+					>
+						IMPRINT
+					</Typography>
+
+					<Box
+						sx={{
+							flexGrow: 1,
+							display: { xs: "flex", md: "none" },
+						}}
+					>
+						<IconButton
+							size="large"
+							aria-label="account of current user"
+							aria-controls="menu-appbar"
+							aria-haspopup="true"
+							onClick={handleOpenNavMenu}
+							color="black"
+						>
+							<MenuIcon />
+						</IconButton>
+						<Menu
+							id="menu-appbar"
+							anchorEl={anchorElNav}
+							anchorOrigin={{
+								vertical: "bottom",
+								horizontal: "left",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "left",
+							}}
+							open={Boolean(anchorElNav)}
+							onClose={handleCloseNavMenu}
+							sx={{
+								display: { xs: "block", md: "none" },
+							}}
+						>
+							{pages.map((page) => (
+								<MenuItem
+									key={page.title}
+									onClick={handleCloseNavMenu}
+								>
+									<Typography
+										onClick={() => navigate(page.url)}
+										textAlign="center"
+										sx={{
+											color: "black",
+											
+										}}
+									>
+										{page.title}
+									</Typography>
+								</MenuItem>
+							))}
+						</Menu>
+					</Box>
+					<BookIcon
+						sx={{
+							display: { xs: "flex", md: "none" },
+							mr: 1,
+							color: "grey",
+						}}
+					/>
+					<Typography
+						variant="h5"
+						noWrap
+						component="a"
+						onClick={() => navigate("/")}
+						sx={{
+							mr: 2,
+							display: { xs: "flex", md: "none" },
+							flexGrow: 1,
+							fontFamily: "monospace",
+							fontWeight: 700,
+							letterSpacing: ".3rem",
+							color: "black",
+							textDecoration: "none",
+							cursor: "pointer",
+						}}
+					>
+						IMPRINT
+					</Typography>
+					<Box
+						sx={{
+							flexGrow: 1,
+							display: { xs: "none", md: "flex" },
+						}}
+					>
+						{pages.map((page) => (						
+									<Button
+										key={page.title}
+										onClick={()=>{
+                      handleCloseNavMenu()
+                      navigate(page.url)
+                    }}
+										sx={{
+											my: 2,
+											color: "black",
+											display: "block",
+										}}
+									>
+										{page.title}
+									</Button>				
+						))}
+					</Box>
+
+					<Box sx={{ flexGrow: 0 }}>
+						<Tooltip title="Open settings">
+							<IconButton
+								onClick={handleOpenUserMenu}
+								sx={{ p: 0 }}
+							>
+								<Avatar
+									alt="Remy Sharp"
+									src="/static/images/avatar/2.jpg"
+								/>
+							</IconButton>
+						</Tooltip>
+						<Menu
+							sx={{ mt: "45px" }}
+							id="menu-appbar"
+							anchorEl={anchorElUser}
+							anchorOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							keepMounted
+							transformOrigin={{
+								vertical: "top",
+								horizontal: "right",
+							}}
+							open={Boolean(anchorElUser)}
+							onClose={handleCloseUserMenu}
+						>
+							{settings.map((setting) => (
+								<MenuItem
+									key={setting.title}
+									onClick={handleCloseUserMenu}
+								>
+									<Typography
+										textAlign="center"
+										sx={{ color: "black" }}
+                    onClick={()=>navigate(setting.url)}
+									>
+										{setting.title}
+									</Typography>
+								</MenuItem>
+							))}
+						</Menu>
+					</Box>
+				</Toolbar>
+			</Container>
+		</AppBar>
+	);
 }
-
-export default Navbar
+export default Navbar;
