@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import RegisterForm from '../components/auth/RegisterForm'
-
+import RegisterForm, { registerSchema } from '../components/auth/RegisterForm'
+import { Formik } from "formik"
+import useAuthCalls from '../hooks/useAuthCalls';
 
 
 export default function SignUp() {
-
-
+	const { register } = useAuthCalls();
 
   return (
       <Container component="main" maxWidth="xs">
@@ -29,9 +29,28 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            SUBMIT
+            Sign Up
           </Typography>
-            <RegisterForm />
+          <Formik
+          initialValues={{
+            username:"",
+            firstName:"",
+            lastName:"",
+            email:"",
+            image:"",
+            bio:"",
+            password:"",
+
+          }}
+          validationSchema={registerSchema}
+          onSubmit={(values, actions) => {
+            register(values)
+            actions.resetForm()
+            actions.setSubmitting(false)
+          }}
+          component={(props) => <RegisterForm {...props} />}
+          >
+          </Formik>
         </Box>
       </Container>
   );
