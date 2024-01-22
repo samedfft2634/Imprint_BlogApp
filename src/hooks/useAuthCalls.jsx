@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {
 	fetchFail,
 	fetchStart,
+	loginSuccess,
 	registerSuccess,
 } from "../features/authSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
@@ -27,8 +28,21 @@ const useAuthCalls = () => {
 			console.log(error);
 		}
 	};
+	const login = async (userInfo) =>{
+		dispatch(fetchStart())
+		try {
+			const {data} = await axiosPublic.post("/auth/login/",userInfo)
+			dispatch(loginSuccess(data))
+			toastSuccessNotify("Login success!");
+			navigate("/")
+		} catch (error) {
+			dispatch(fetchFail());
+			toastErrorNotify("Login  failed!");
+			console.log(error);
+		}
+	}
 
-  return {register}
+  return {register,login}
 }
 
 export default useAuthCalls

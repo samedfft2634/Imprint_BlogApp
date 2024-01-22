@@ -9,6 +9,8 @@ import Profile from "../pages/Profile";
 import Login from "../pages/Login";
 import MyBlogs from "../pages/MyBlogs";
 import Register from "../pages/Register";
+import Detail from "../pages/Detail";
+import NotFound from "../pages/NotFound";
 
 
 const AppRouter = () => {
@@ -18,11 +20,13 @@ const AppRouter = () => {
 			<Routes>
 				<Route path="/" element={<Dashboard />} />
 				<Route path="auth" element={<Login />} />
+				<Route path="register" element={<Register />} />
 				<Route path="about" element={<About />} />
 				<Route path="new-blog" element={<NewBlog />} />
 				<Route path="my-blogs" element={<MyBlogs />} />
 				<Route path="profile" element={<Profile />} />
-				<Route path="register" element={<Register />} />
+				<Route path="detail" element={<Detail />} />
+				<Route path="*" element={<NotFound />} />
 			</Routes>
 			<Footer />
 		</Router>

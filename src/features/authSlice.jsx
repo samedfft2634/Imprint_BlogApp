@@ -22,7 +22,7 @@ const authSlice = createSlice({
 		},
 		loginSuccess: (state, { payload }) => {
 			state.loading = false;
-			state.user.username = payload.user.username;
+			state.user.email = payload.user.username;
 			state.token = payload.token;
 		},
 		logoutSuccess: (state) => {
