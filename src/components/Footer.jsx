@@ -2,7 +2,9 @@ import { Box, Container, Paper, Typography } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import React from "react";
 
+
 const Footer = () => {
+	const date = new Date().getFullYear()
 	return (
 		<Paper
 			sx={{
@@ -32,8 +34,8 @@ const Footer = () => {
 						mb: 2,
 					}}
 				>
-					<Typography variant="caption" color="initial">
-						Copyright ©2022. SF Production
+					<Typography variant="caption" color="initial" sx={{fontSize:"1rem"}}>
+						Copyright ©{date} SF Production
 					</Typography>
 				</Box>
 			</Container>

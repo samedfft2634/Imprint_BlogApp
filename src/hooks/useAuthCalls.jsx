@@ -27,6 +27,7 @@ const useAuthCalls = () => {
 			console.log(error);
 		}
 	};
+
   return {register}
 }
 
