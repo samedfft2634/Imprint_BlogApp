@@ -15,7 +15,8 @@ import BookIcon from "@mui/icons-material/Book";
 import { CssBaseline } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { deepPurple } from "@mui/material/colors";
-
+import { useDispatch, useSelector } from "react-redux";
+import useAuthCalls from "../hooks/useAuthCalls";
 
 const pages = [
 	{
@@ -27,39 +28,32 @@ const pages = [
 		url: "/about/",
 	},
 ];
-const settings = [
-  {
-    id:1,
-    title:"My Blogs",
-    url:"/my-blogs/"
-  },
-  {
-    id:2,
-    title:"Account",
-    url:"/profile/"
-  },
-  {
-    id:3,
-    title:"Login",
-    url:"/auth/"
-  },
-  {
-    id:4,
-    title:"Logout",
-    url:"/"
-  },
-  {
-    id:5,
-    title:"Register",
-    url:"/register"
-  },
-]
-
+const  getSettings = (token)=> {
+	if (token) {
+	  return [
+		{ id: 1, title: "My Blogs", url: "/my-blogs/" },
+		{ id: 2, title: "Account", url: "/profile/" },
+		{ id: 4, title: "Logout", url: "/" }
+	  ];
+	} else {
+	  return [
+		{ id: 3, title: "Login", url: "/auth/" },
+		{ id: 5, title: "Register", url: "/register" }
+	  ];
+	}
+  }
+  
 
 function Navbar() {
+	const { token } = useSelector((state) => state.auth);
+	const settings = getSettings(token); 
 	const navigate = useNavigate();
+	const dispatch = useDispatch()
+	const {logout} = useAuthCalls()
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+	
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -151,7 +145,6 @@ function Navbar() {
 										textAlign="center"
 										sx={{
 											color: "black",
-											
 										}}
 									>
 										{page.title}
@@ -192,21 +185,21 @@ function Navbar() {
 							display: { xs: "none", md: "flex" },
 						}}
 					>
-						{pages.map((page) => (						
-									<Button
-										key={page.title}
-										onClick={()=>{
-                      handleCloseNavMenu()
-                      navigate(page.url)
-                    }}
-										sx={{
-											my: 2,
-											color: "black",
-											display: "block",
-										}}
-									>
-										{page.title}
-									</Button>				
+						{pages.map((page) => (
+							<Button
+								key={page.title}
+								onClick={() => {
+									handleCloseNavMenu();
+									navigate(page.url);
+								}}
+								sx={{
+									my: 2,
+									color: "black",
+									display: "block",
+								}}
+							>
+								{page.title}
+							</Button>
 						))}
 					</Box>
 
@@ -241,12 +234,18 @@ function Navbar() {
 							{settings.map((setting) => (
 								<MenuItem
 									key={setting.title}
-									onClick={handleCloseUserMenu}
+									onClick={()=>{
+										if(setting.title === "Logout"){
+											logout();
+										} else {
+											handleCloseUserMenu()
+										}
+									}}
 								>
 									<Typography
 										textAlign="center"
 										sx={{ color: "black" }}
-                    onClick={()=>navigate(setting.url)}
+										onClick={() => navigate(setting.url)}
 									>
 										{setting.title}
 									</Typography>

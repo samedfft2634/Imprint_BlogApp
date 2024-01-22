@@ -5,6 +5,7 @@ import {
 	fetchFail,
 	fetchStart,
 	loginSuccess,
+	logoutSuccess,
 	registerSuccess,
 } from "../features/authSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
@@ -41,8 +42,20 @@ const useAuthCalls = () => {
 			console.log(error);
 		}
 	}
+	const logout = async () =>{
+		dispatch(fetchStart())
+		try {
+			await axiosPublic("/auth/logout/")
+			dispatch(logoutSuccess())
+			toastSuccessNotify("Logout success!");
+		} catch (error) {
+			dispatch(fetchFail());
+			toastErrorNotify("Logout  failed!");
+			console.log(error);
+		}
+	}
 
-  return {register,login}
+  return {register,login,logout}
 }
 
 export default useAuthCalls

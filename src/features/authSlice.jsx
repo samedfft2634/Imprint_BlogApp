@@ -22,12 +22,12 @@ const authSlice = createSlice({
 		},
 		loginSuccess: (state, { payload }) => {
 			state.loading = false;
-			state.user.email = payload.user.username;
+			state.user.email = payload.user.email;
 			state.token = payload.token;
 		},
 		logoutSuccess: (state) => {
 			state.loading = false;
-			state.user.username = "";
+			state.user.email = "";
 			state.token = "";
 		},
 		fetchFail: (state) => {
