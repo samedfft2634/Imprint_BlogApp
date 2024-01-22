@@ -20,6 +20,10 @@ const authSlice = createSlice({
 		fetchStart: (state) => {
 			state.loading = true;
 		},
+		fetchFail: (state) => {
+			state.loading = false;
+			state.error = true;
+		},
 		loginSuccess: (state, { payload }) => {
 			state.loading = false;
 			state.user.email = payload.user.email;
@@ -29,10 +33,6 @@ const authSlice = createSlice({
 			state.loading = false;
 			state.user.email = "";
 			state.token = "";
-		},
-		fetchFail: (state) => {
-			state.loading = false;
-			state.error = true;
 		},
 		registerSuccess: (state, { payload }) => {
 			state.loading = false;
