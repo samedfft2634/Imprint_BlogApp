@@ -32,7 +32,7 @@ const useAuthCalls = () => {
 	const login = async (userInfo) =>{
 		dispatch(fetchStart())
 		try {
-			const {data} = await axiosPublic.post("/auth/login/",userInfo)
+			const {data} = await axiosWithToken.post("/auth/login/",userInfo)
 			dispatch(loginSuccess(data))
 			toastSuccessNotify("Login success!");
 			navigate("/")

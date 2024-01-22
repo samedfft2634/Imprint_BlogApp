@@ -48,7 +48,6 @@ function Navbar() {
 	const { token } = useSelector((state) => state.auth);
 	const settings = getSettings(token); 
 	const navigate = useNavigate();
-	const dispatch = useDispatch()
 	const {logout} = useAuthCalls()
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
