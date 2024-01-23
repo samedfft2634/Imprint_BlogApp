@@ -14,10 +14,16 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import ForumIcon from "@mui/icons-material/Forum";
 import IconButton from "@mui/material/IconButton";
 import { deepPurple, teal, yellow } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+
+
 
 const BlogCard = () => {
 	const { EllipsisText } = globalStyles();
 	const { blogs, loading, error } = useSelector((state) => state.blog);
+  
+  const navigate = useNavigate()
+
 	return (
 		<Box
 			sx={{
@@ -136,7 +142,7 @@ const BlogCard = () => {
 										}}
 									>
 										<VisibilityIcon />
-										<span>33</span>
+										<span>{blog?.countOfVisitors || 0 }</span>
 									</IconButton>
 									<IconButton
 										aria-label="comment"
@@ -153,7 +159,7 @@ const BlogCard = () => {
 										}}
 									>
 										<ForumIcon sx={{}} />
-										<span>102</span>
+										<span>{blog?.comments.length || 0 }</span>
 									</IconButton>
 									<IconButton
 										aria-label="visible"
@@ -170,11 +176,12 @@ const BlogCard = () => {
 										}}
 									>
 										<ThumbUpIcon sx={{}} />
-										<span>133</span>
+										<span>{blog?.likes.length || 0 }</span>
 									</IconButton>
 								</Box>
 
 								<Button
+                onClick={()=> navigate(`/detail/${blog?._id}`)}
 									variant="solid"
 									sx={{
 										bgcolor: deepPurple[200],
