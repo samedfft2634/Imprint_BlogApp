@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { deepPurple } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import useAuthCalls from "../hooks/useAuthCalls";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
 const pages = [
 	{
@@ -28,31 +29,28 @@ const pages = [
 		url: "/about/",
 	},
 ];
-const  getSettings = (token)=> {
+const getSettings = (token) => {
 	if (token) {
-	  return [
-		{ id: 1, title: "My Blogs", url: "/my-blogs/" },
-		{ id: 2, title: "Account", url: "/profile/" },
-		{ id: 4, title: "Logout", url: "/" }
-	  ];
+		return [
+			{ id: 1, title: "My Blogs", url: "/my-blogs/" },
+			{ id: 2, title: "Account", url: "/profile/" },
+			{ id: 4, title: "Logout", url: "/" },
+		];
 	} else {
-	  return [
-		{ id: 3, title: "Login", url: "/auth/" },
-		{ id: 5, title: "Register", url: "/register" }
-	  ];
+		return [
+			{ id: 3, title: "Login", url: "/auth/" },
+			{ id: 5, title: "Register", url: "/register" },
+		];
 	}
-  }
-  
+};
 
 function Navbar() {
 	const { token } = useSelector((state) => state.auth);
-	const settings = getSettings(token); 
+	const settings = getSettings(token);
 	const navigate = useNavigate();
-	const {logout} = useAuthCalls()
+	const { logout } = useAuthCalls();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-	
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -201,7 +199,14 @@ function Navbar() {
 							</Button>
 						))}
 					</Box>
-
+					<Tooltip title="New Blog">
+							<IconButton
+								onClick={()=> navigate("new-blog")}
+								sx={{m:1, p: 1 }}
+							>
+							<PostAddIcon sx={{fontSize:"2rem"}}/>
+							</IconButton>
+					</Tooltip>
 					<Box sx={{ flexGrow: 0 }}>
 						<Tooltip title="Open settings">
 							<IconButton
@@ -233,11 +238,11 @@ function Navbar() {
 							{settings.map((setting) => (
 								<MenuItem
 									key={setting.title}
-									onClick={()=>{
-										if(setting.title === "Logout"){
+									onClick={() => {
+										if (setting.title === "Logout") {
 											logout();
 										} else {
-											handleCloseUserMenu()
+											handleCloseUserMenu();
 										}
 									}}
 								>
