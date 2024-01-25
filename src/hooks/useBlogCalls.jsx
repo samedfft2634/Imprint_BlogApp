@@ -1,7 +1,6 @@
-import React from 'react'
 import useAxios from './useAxios'
-import { useDispatch } from 'react-redux'
-import { fetchFail, fetchStart, getBlogDetailSuccess, getCategorySuccess, postCommentSuccess } from '../features/blogSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchFail, fetchStart, getBlogDetailSuccess, getCategorySuccess, getUserBlogSuccess, postCommentSuccess } from '../features/blogSlice'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/ToastNotify'
 import {getBlogSuccess} from "../features/blogSlice"
 import { useParams } from 'react-router-dom'
@@ -10,12 +9,14 @@ const useBlogCalls = () => {
   const {axiosWithToken,axiosPublic} = useAxios()
   const dispatch = useDispatch()
   const {id} = useParams()
+  const {user:{_id}} = useSelector(state=>state.auth)
+  console.log(_id)
   const getBlogs = async ()=>{
     dispatch(fetchStart())
     try {
       const {data} = await axiosWithToken(`/blogs/?page=1&limit=25`)
       dispatch(getBlogSuccess(data))
-      toastSuccessNotify("Blogs are successfully fetched")
+      // toastSuccessNotify("Blogs are successfully fetched")
     } catch (error) {
       dispatch(fetchFail())
       toastErrorNotify("Blogs can not be fetched!")
@@ -69,7 +70,19 @@ const useBlogCalls = () => {
       console.log(error)
     }
   }
-  return {getCategories,getBlogs,getBlogDetails,postComment,postBlog}
+  const getUserBlogs = async ()=>{
+    dispatch(fetchStart())
+    try {
+      const {data} = await axiosPublic(`/blogs?author=${_id}`)
+      dispatch(getUserBlogSuccess(data.data))
+      // toastSuccessNotify("User blogs successfully fetched!")
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify("There is an error to show user blogs !")
+      console.log(error)
+    }
+  }
+  return {getCategories,getBlogs,getBlogDetails,postComment,postBlog,getUserBlogs}
 }
 
 export default useBlogCalls

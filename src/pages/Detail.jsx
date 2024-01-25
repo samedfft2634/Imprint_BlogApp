@@ -14,7 +14,8 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-function customFormatDate(dateString) {
+
+export const customFormatDate = (dateString)=> {
 	const date = new Date(dateString);
 	const options = {
 		weekday: "short",

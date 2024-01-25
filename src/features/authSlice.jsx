@@ -7,11 +7,13 @@ const initialState = {
 		email: "",
 		password: "",
 		image:"",
-		bio:""
+		bio:"",
+		_id:"",
 	},
 	loading: false,
 	error: false,
 	token: "",
+	
 }
 const authSlice = createSlice({
 	name: "auth",
@@ -28,6 +30,7 @@ const authSlice = createSlice({
 			state.loading = false;
 			state.user.email = payload.user.email;
 			state.token = payload.token;
+			state.user._id = payload.user._id
 		},
 		logoutSuccess: (state) => {
 			state.loading = false;

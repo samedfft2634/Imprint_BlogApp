@@ -11,7 +11,7 @@ import Register from "../pages/Register";
 import Detail from "../pages/Detail";
 import NotFound from "../pages/NotFound";
 import { Box } from '@mui/material';
-import { useState } from "react";
+
 
 const AppRouter = () => {
 	return (

@@ -240,16 +240,16 @@ function Navbar() {
 									key={setting.title}
 									onClick={() => {
 										if (setting.title === "Logout") {
-											logout();
-										} else {
-											handleCloseUserMenu();
+											logout(); 
 										}
+										handleCloseUserMenu();
+										navigate(setting.url); 
 									}}
 								>
 									<Typography
 										textAlign="center"
 										sx={{ color: "black" }}
-										onClick={() => navigate(setting.url)}
+										
 									>
 										{setting.title}
 									</Typography>
