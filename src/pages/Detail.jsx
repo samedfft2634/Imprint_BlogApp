@@ -30,24 +30,36 @@ const Detail = () => {
 	const { blogDetails } = useSelector((state) => state.blog);
 	const { getBlogDetails } = useBlogCalls();
 	const [show, setShow] = useState(false);
-	const {postComment} = useBlogCalls()
-	const {title,image,content,createdAt,likes,comments,countOfVisitors,userId,_id} = blogDetails;
-	const {id} = useParams()
+	const { postComment } = useBlogCalls();
+	const {
+		title,
+		image,
+		content,
+		createdAt,
+		likes,
+		comments,
+		countOfVisitors,
+		userId,
+		_id,
+	} = blogDetails;
+	const { id } = useParams();
 	const [comment, setComment] = useState({
 		blogId: id,
-		comment:"",
-	})
-	const handleSubmit = ()=>{
-		postComment(comment)
+		comment: "",
+	});
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		await postComment(comment);
+		getBlogDetails()
 		setComment({
-			blogId:"",
-			comment:""
-		})
-	}
-	const handleChange = (e)=>{
-		const {name,value} = e.target
-		setComment({...comment,[name]:value})
-	}
+			blogId: "",
+			comment: "",
+		});
+	};
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setComment({ ...comment, [name]: value });
+	};
 	console.log(blogDetails);
 	useEffect(() => {
 		getBlogDetails();
@@ -174,46 +186,51 @@ const Detail = () => {
 					</CardContent>
 				</Grid>
 			</Grid>
-			<Box sx={{ display: `${show ? "flex": "none"}`,flexDirection:"column" }}>
+			<Box
+				sx={{
+					display: `${show ? "flex" : "none"}`,
+					flexDirection: "column",
+				}}
+			>
 				<Box component="form" onSubmit={handleSubmit}>
-				<TextField
-					id="comment"
-					name="comment"
-					label="Comment"
-					placeholder="Add a comment"
-					multiline
-					rows={4}
-					variant="filled"
-					sx={{
-						width: "100%",
-						"& label.Mui-focused": {
-							color: deepPurple[500],
-						},
-						"& .MuiFilledInput-underline:after": {
-							borderBottomColor: deepPurple[500],
-						},
-					}}
-					value={comment?.comment}
-					onChange={handleChange}
-				/>
-				<Button
-					type="submit"
-					fullWidth
-					variant="contained"
-					sx={{
-						mt: 3,
-						mb: 2,
-						bgcolor: deepPurple[400],
-						":hover": {
-							bgcolor: deepPurple[300],
-						},
-					}}
-				>
-					Submit
-				</Button>
+					<TextField
+						id="comment"
+						name="comment"
+						label="Comment"
+						placeholder="Add a comment"
+						multiline
+						rows={4}
+						variant="filled"
+						sx={{
+							width: "100%",
+							"& label.Mui-focused": {
+								color: deepPurple[500],
+							},
+							"& .MuiFilledInput-underline:after": {
+								borderBottomColor: deepPurple[500],
+							},
+						}}
+						value={comment?.comment}
+						onChange={handleChange}
+					/>
+					<Button
+						type="submit"
+						fullWidth
+						variant="contained"
+						sx={{
+							mt: 3,
+							mb: 2,
+							bgcolor: deepPurple[400],
+							":hover": {
+								bgcolor: deepPurple[300],
+							},
+						}}
+					>
+						Submit
+					</Button>
 				</Box>
 				{comments?.map((comment) => (
-					<Card key={comment?._id} sx={{mt:2}}>
+					<Card key={comment?._id} sx={{ mt: 2 }}>
 						<CardContent>
 							<Box
 								sx={{
