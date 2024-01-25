@@ -1,7 +1,7 @@
 import React from 'react'
 import useAxios from './useAxios'
 import { useDispatch } from 'react-redux'
-import { fetchFail, fetchStart, getBlogDetailSuccess, postCommentSuccess } from '../features/blogSlice'
+import { fetchFail, fetchStart, getBlogDetailSuccess, getCategorySuccess, postCommentSuccess } from '../features/blogSlice'
 import { toastErrorNotify, toastSuccessNotify } from '../helper/ToastNotify'
 import {getBlogSuccess} from "../features/blogSlice"
 import { useParams } from 'react-router-dom'
@@ -46,7 +46,30 @@ const useBlogCalls = () => {
       console.log(error)
     }
   }
-  return {getBlogs,getBlogDetails,postComment}
+  const postBlog = async (userInfo) =>{
+    dispatch(fetchStart())
+    try {
+      await axiosWithToken.post("/blogs/",userInfo)
+      toastSuccessNotify("New blog added!")
+      getBlogs()
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify("Failed to post new blog!")
+      console.log(error)
+    }
+  }
+  const getCategories = async () =>{
+    dispatch(fetchStart())
+    try {
+      const {data} = await axiosWithToken("/categories/")
+      dispatch(getCategorySuccess(data))
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify("Failed to show categories!")
+      console.log(error)
+    }
+  }
+  return {getCategories,getBlogs,getBlogDetails,postComment,postBlog}
 }
 
 export default useBlogCalls
