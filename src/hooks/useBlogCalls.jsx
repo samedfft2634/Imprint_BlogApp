@@ -10,7 +10,7 @@ const useBlogCalls = () => {
   const dispatch = useDispatch()
   const {id} = useParams()
   const {user:{_id}} = useSelector(state=>state.auth)
-  console.log(_id)
+  // console.log(_id)
   const getBlogs = async ()=>{
     dispatch(fetchStart())
     try {
@@ -59,6 +59,17 @@ const useBlogCalls = () => {
       console.log(error)
     }
   }
+  const deleteBlog = async (postId) =>{
+    try {
+      await axiosWithToken.delete(`/blogs/${postId}`)
+      toastSuccessNotify("Blog was successfully deleted!")
+      getBlogs()
+    } catch (error) {
+      dispatch(fetchFail())
+      toastErrorNotify("Failed to deleting blog!")
+      console.log(error)
+    }
+  }
   const getCategories = async () =>{
     dispatch(fetchStart())
     try {
@@ -82,7 +93,7 @@ const useBlogCalls = () => {
       console.log(error)
     }
   }
-  return {getCategories,getBlogs,getBlogDetails,postComment,postBlog,getUserBlogs}
+  return {getCategories,getBlogs,getBlogDetails,postComment,postBlog,getUserBlogs,deleteBlog}
 }
 
 export default useBlogCalls

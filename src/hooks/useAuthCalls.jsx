@@ -40,7 +40,7 @@ const useAuthCalls = () => {
 			dispatch(fetchFail());
 			toastErrorNotify("Login  failed!");
 			console.log(error);
-		}
+		} 
 	}
 	const logout = async () =>{
 		dispatch(fetchStart())

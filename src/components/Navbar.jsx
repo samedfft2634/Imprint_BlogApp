@@ -46,6 +46,7 @@ const getSettings = (token) => {
 
 function Navbar() {
 	const { token } = useSelector((state) => state.auth);
+	const { image } = useSelector((state) => state.auth.user);
 	const settings = getSettings(token);
 	const navigate = useNavigate();
 	const { logout } = useAuthCalls();
@@ -215,7 +216,7 @@ function Navbar() {
 							>
 								<Avatar
 									alt="Remy Sharp"
-									src="/static/images/avatar/2.jpg"
+									src={image}
 								/>
 							</IconButton>
 						</Tooltip>

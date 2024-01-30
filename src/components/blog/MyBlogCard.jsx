@@ -1,6 +1,6 @@
 import * as React from "react";
 import AspectRatio from "@mui/joy/AspectRatio";
-import Button from "@mui/joy/Button";
+import Button from '@mui/joy/Button';
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import CardOverflow from "@mui/joy/CardOverflow";
@@ -17,11 +17,13 @@ import IconButton from "@mui/material/IconButton";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Box from "@mui/joy/Box";
 import { useNavigate } from "react-router-dom";
+import { style } from "./DeleteModal";
 
 export default function MyBlogCard() {
 	const { userBlogs, loading, error } = useSelector((state) => state.blog);
 	const { EllipsisText } = globalStyles();
 	const navigate = useNavigate();
+
 
 	return (
 		<Container sx={{ my: 2 }} maxWidth="xl">
@@ -33,146 +35,173 @@ export default function MyBlogCard() {
 				useFlexGap
 				gap={3}
 			>
-				{userBlogs?.map((user) => {
-					const {
-						comments,
-						content,
-						countOfVisitors,
-						image,
-						isPublish,
-						title,
-						likes,
-						createdAt,
-						updatedAt,
-						_id,
-					} = user;
+				{ userBlogs.length > 0 ? userBlogs?.map((user) => {
+						const {
+							comments,
+							content,
+							countOfVisitors,
+							image,
+							isPublish,
+							title,
+							likes,
+							createdAt,
+							updatedAt,
+							_id,
+						} = user;
 
-					return (
-						<Card
-							sx={{
-								width: 320,
-								maxWidth: "100%",
-								boxShadow: "lg",
-							}}
-							key={_id}
-						>
-							<CardOverflow>
-								<AspectRatio sx={{ minWidth: 200 }}>
-									<CardMedia
-										component="img"
-										src={image}
-										loading="lazy"
-										alt={title}
-									/>
-								</AspectRatio>
-							</CardOverflow>
-							<CardContent>
-								<Typography level="body-xs">
-									Created At: {customFormatDate(createdAt)}
+						return (
+							<Card
+								sx={{
+									width: 320,
+									maxWidth: "100%",
+									boxShadow: "lg",
+								}}
+								key={_id}
+							>
+								<CardOverflow>
+									<AspectRatio sx={{ minWidth: 200 }}>
+										<CardMedia
+											component="img"
+											src={image}
+											loading="lazy"
+											alt={title}
+										/>
+									</AspectRatio>
+								</CardOverflow>
+								<CardContent>
+									<Typography level="body-xs">
+										Created At:{" "}
+										{customFormatDate(createdAt)}
+									</Typography>
+									<Typography
+										fontWeight="md"
+										color="neutral"
+										textColor="text.primary"
+										overlay
+									>
+										{title}
+									</Typography>
+									<EllipsisText
+										text={content}
+										maxLines={3}
+									></EllipsisText>
+									<Typography
+										level="title-lg"
+										sx={{ mt: 1, fontWeight: "xl" }}
+										endDecorator={
+											<Chip
+												component="span"
+												size="sm"
+												variant="soft"
+												color={
+													isPublish
+														? "success"
+														: "danger"
+												}
+											>
+												{isPublish
+													? "Published"
+													: "Draft"}
+											</Chip>
+										}
+									>
+										<Box sx={{ flex: 2 }}>
+											<IconButton
+												aria-label="add to favorites"
+												sx={{
+													"&:hover": {
+														bgcolor: teal[100],
+														"& .MuiSvgIcon-root": {
+															color: teal[400],
+														},
+														"& span": {
+															color: teal[600],
+														},
+													},
+												}}
+											>
+												<VisibilityIcon />
+												<span>
+													{countOfVisitors || 0}
+												</span>
+											</IconButton>
+											<IconButton
+												aria-label="comment"
+												sx={{
+													"&:hover": {
+														bgcolor:
+															deepPurple[500],
+														"& .MuiSvgIcon-root": {
+															color: deepPurple[200],
+														},
+														"& span": {
+															color: deepPurple[200],
+														},
+													},
+												}}
+											>
+												<ForumIcon sx={{}} />
+												<span>
+													{comments.length || 0}
+												</span>
+											</IconButton>
+											<IconButton
+												aria-label="visible"
+												sx={{
+													"&:hover": {
+														bgcolor: yellow[500],
+														"& .MuiSvgIcon-root": {
+															color: yellow[800],
+														},
+														"& span": {
+															color: yellow[800],
+														},
+													},
+												}}
+											>
+												<ThumbUpIcon />
+												<span>{likes.length || 0}</span>
+											</IconButton>
+										</Box>
+									</Typography>
+									<Typography level="body-sm">
+										Updated At:{" "}
+										{customFormatDate(updatedAt)}
+									</Typography>
+								</CardContent>
+								<CardOverflow>
+									<Button
+										variant="solid"
+										color="danger"
+										size="lg"
+										onClick={() =>
+											navigate(`/detail/${_id}`)
+										}
+										sx={{
+											bgcolor: deepPurple[600],
+											"&:hover": {
+												bgcolor: deepPurple[400],
+											},
+										}}
+									>
+										Read More
+									</Button>
+								</CardOverflow>
+							</Card>
+						);
+					}) : (
+						<Box sx={style}>
+							<Box sx={{display:"flex",flexDirection:"column",gap:2}}>
+								<Typography fontSize={"lg"} fontWeight="lg" >
+									There is no blogs ! Create One...
 								</Typography>
-								<Typography
-									fontWeight="md"
-									color="neutral"
-									textColor="text.primary"
-									overlay
-								>
-									{title}
-								</Typography>
-								<EllipsisText
-									text={content}
-									maxLines={3}
-								></EllipsisText>
-								<Typography
-									level="title-lg"
-									sx={{ mt: 1, fontWeight: "xl" }}
-									endDecorator={
-										<Chip
-											component="span"
-											size="sm"
-											variant="soft"
-											color={
-												isPublish ? "success" : "danger"
-											}
-										>
-											{isPublish ? "Published" : "Draft"}
-										</Chip>
-									}
-								>
-									<Box sx={{ flex: 2 }}>
-										<IconButton
-											aria-label="add to favorites"
-											sx={{
-												"&:hover": {
-													bgcolor: teal[100],
-													"& .MuiSvgIcon-root": {
-														color: teal[400],
-													},
-													"& span": {
-														color: teal[600],
-													},
-												},
-											}}
-										>
-											<VisibilityIcon />
-											<span>{countOfVisitors || 0}</span>
-										</IconButton>
-										<IconButton
-											aria-label="comment"
-											sx={{
-												"&:hover": {
-													bgcolor: deepPurple[500],
-													"& .MuiSvgIcon-root": {
-														color: deepPurple[200],
-													},
-													"& span": {
-														color: deepPurple[200],
-													},
-												},
-											}}
-										>
-											<ForumIcon sx={{}} />
-											<span>{comments.length || 0}</span>
-										</IconButton>
-										<IconButton
-											aria-label="visible"
-											sx={{
-												"&:hover": {
-													bgcolor: yellow[500],
-													"& .MuiSvgIcon-root": {
-														color: yellow[800],
-													},
-													"& span": {
-														color: yellow[800],
-													},
-												},
-											}}
-										>
-											<ThumbUpIcon />
-											<span>{likes.length || 0}</span>
-										</IconButton>
-									</Box>
-								</Typography>
-								<Typography level="body-sm">
-									Updated At: {customFormatDate(updatedAt)}
-								</Typography>
-							</CardContent>
-							<CardOverflow>
-								<Button
-									variant="solid"
-									color="danger"
-									size="lg"
-									onClick={() => navigate(`/detail/${_id}`)}
-									sx={{
-										bgcolor: deepPurple[600],
-										"&:hover": { bgcolor: deepPurple[400] },
-									}}
-								>
-									Read More
+								<Button variant="solid" color="success" onClick={()=> navigate("/new-blog")} >
+									New Blogg
 								</Button>
-							</CardOverflow>
-						</Card>
-					);
-				})}
+							</Box>
+						</Box>
+					)
+				 }
 			</Stack>
 		</Container>
 	);

@@ -14,8 +14,11 @@ import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteModal from "../components/blog/DeleteModal";
 
-export const customFormatDate = (dateString)=> {
+export const customFormatDate = (dateString) => {
 	const date = new Date(dateString);
 	const options = {
 		weekday: "short",
@@ -24,11 +27,24 @@ export const customFormatDate = (dateString)=> {
 		year: "numeric",
 	};
 	return date.toLocaleDateString("en-GB", options);
-}
+};
 
 const Detail = () => {
+	//? For Modals -------------------------
+	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+	const handleDeleteClick = () => {
+        setDeleteModalOpen(true);
+    };
+	// const handleClose = () => setOpen(false);
+	//? -------------------------------------
+
+	
 	const { EllipsisText } = globalStyles();
 	const { blogDetails } = useSelector((state) => state.blog);
+	const {
+		user: { _id },
+	} = useSelector((state) => state.auth);
+	// console.log(_id);
 	const { getBlogDetails } = useBlogCalls();
 	const [show, setShow] = useState(false);
 	const { postComment } = useBlogCalls();
@@ -41,7 +57,6 @@ const Detail = () => {
 		comments,
 		countOfVisitors,
 		userId,
-		_id,
 	} = blogDetails;
 	const { id } = useParams();
 	const [comment, setComment] = useState({
@@ -49,9 +64,9 @@ const Detail = () => {
 		comment: "",
 	});
 	const handleSubmit = async (e) => {
-		e.preventDefault()
+		e.preventDefault();
 		await postComment(comment);
-		getBlogDetails()
+		getBlogDetails();
 		setComment({
 			blogId: "",
 			comment: "",
@@ -61,13 +76,13 @@ const Detail = () => {
 		const { name, value } = e.target;
 		setComment({ ...comment, [name]: value });
 	};
-	console.log(blogDetails);
+	// console.log(blogDetails);
 	useEffect(() => {
 		getBlogDetails();
 	}, []);
 	return (
-		<Container maxWidth="xl" sx={{px:2}}>
-			<Grid container spacing={2} sx={{mt:2}}>
+		<Container maxWidth="xl" sx={{ px: 2 }}>
+			<Grid container spacing={2} sx={{ mt: 2 }}>
 				<Grid item xs={12} xl={6}>
 					<CardContent>
 						<CardMedia
@@ -75,7 +90,7 @@ const Detail = () => {
 							src={image}
 							loading="lazy"
 							alt={title}
-							sx={{ width: "100%"}}
+							sx={{ width: "100%" }}
 						/>
 						<Box
 							sx={{
@@ -99,7 +114,11 @@ const Detail = () => {
 				</Grid>
 				<Grid item xs={12} xl={6}>
 					<CardContent>
-						<Typography fontSize="xl" fontWeight="xl" sx={{mb:3}}>
+						<Typography
+							fontSize="xl"
+							fontWeight="xl"
+							sx={{ mb: 3 }}
+						>
 							{title}
 						</Typography>
 						<Typography
@@ -184,6 +203,35 @@ const Detail = () => {
 							Read More
 						</Button> */}
 						</Box>
+
+						{_id === userId?._id && <Box
+							sx={{
+								display: "flex",
+								gap: 1.5,
+								m:"auto",
+								my:2,
+								"& > button": { flex: 1 },
+							}}
+						>
+							<Box sx={{ display: "flex", gap: 2, flex: 2 }}>
+								<Button
+									variant="contained"
+									color="success"
+									startIcon={<CreateIcon />}
+								>
+									Update Blog
+								</Button>
+								<Button
+									variant="outlined"
+									color="error"
+									endIcon={<DeleteIcon />}
+									onClick={handleDeleteClick}
+								>
+									Delete Blog
+								</Button>
+								<DeleteModal open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} image={image} id={id} />
+							</Box>
+						</Box>}
 					</CardContent>
 				</Grid>
 			</Grid>
