@@ -15,6 +15,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import IconButton from "@mui/material/IconButton";
 import { deepPurple, teal, yellow } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
+import { customFormatDate } from "../../pages/Detail";
 
 
 
@@ -101,7 +102,7 @@ const BlogCard = () => {
 								fontWeight="lg"
 								textColor="text.tertiary"
 							>
-								Created :{blog?.createdAt}
+								Created :{customFormatDate(blog?.createdAt)}
 							</Typography>
 							<Sheet
 								sx={{

@@ -66,16 +66,16 @@ const Detail = () => {
 		getBlogDetails();
 	}, []);
 	return (
-		<Container maxWidth="lg">
-			<Grid container spacing={2} sx={{ m: 5 }}>
-				<Grid item xs={12} md={4}>
+		<Container maxWidth="xl" sx={{px:2}}>
+			<Grid container spacing={2} sx={{mt:2}}>
+				<Grid item xs={12} xl={6}>
 					<CardContent>
 						<CardMedia
 							component="img"
 							src={image}
 							loading="lazy"
 							alt={title}
-							sx={{ width: "100%", height: "auto" }}
+							sx={{ width: "100%"}}
 						/>
 						<Box
 							sx={{
@@ -97,9 +97,9 @@ const Detail = () => {
 						</Typography>
 					</CardContent>
 				</Grid>
-				<Grid item xs={12} md={8}>
+				<Grid item xs={12} xl={6}>
 					<CardContent>
-						<Typography fontSize="xl" fontWeight="lg">
+						<Typography fontSize="xl" fontWeight="xl" sx={{mb:3}}>
 							{title}
 						</Typography>
 						<Typography
