@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteModal from "../components/blog/DeleteModal";
+import UpdateModal from "../components/blog/UpdateModal";
 
 export const customFormatDate = (dateString) => {
 	const date = new Date(dateString);
@@ -30,13 +31,18 @@ export const customFormatDate = (dateString) => {
 };
 
 const Detail = () => {
-	//? For Modals -------------------------
+	//* For Update Modal ------------------------
+	const [updateModalOpen, setUpdateModalOpen] = useState(false);
+	const handleUpdateClick = () => {
+        setUpdateModalOpen(true);
+    };
+	//* ------------------------------------------
+	//? For Delete Modal -------------------------
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const handleDeleteClick = () => {
         setDeleteModalOpen(true);
     };
-	// const handleClose = () => setOpen(false);
-	//? -------------------------------------
+	//? ------------------------------------------
 
 	
 	const { EllipsisText } = globalStyles();
@@ -218,6 +224,7 @@ const Detail = () => {
 									variant="contained"
 									color="success"
 									startIcon={<CreateIcon />}
+									onClick={handleUpdateClick}
 								>
 									Update Blog
 								</Button>
@@ -230,6 +237,7 @@ const Detail = () => {
 									Delete Blog
 								</Button>
 								<DeleteModal open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} image={image} id={id} />
+								<UpdateModal open={updateModalOpen} handleClose={()=>setUpdateModalOpen(false)} />
 							</Box>
 						</Box>}
 					</CardContent>
