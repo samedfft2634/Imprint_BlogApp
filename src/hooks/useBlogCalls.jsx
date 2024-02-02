@@ -20,11 +20,14 @@ const useBlogCalls = () => {
 		user: { _id },
 	} = useSelector((state) => state.auth);
 	// console.log(_id)
-	const getBlogs = async () => {
+	
+	const getBlogs = async (url) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await axiosWithToken(`/blogs/?page=1&limit=25`);
-			dispatch(getBlogSuccess(data));
+			const { data } = await axiosWithToken(url);
+			const blogData = data.data;
+			const pagination = data.details;
+			dispatch(getBlogSuccess({blogData,pagination}));
 			// toastSuccessNotify("Blogs are successfully fetched")
 		} catch (error) {
 			dispatch(fetchFail());
@@ -104,7 +107,7 @@ const useBlogCalls = () => {
 	const getUserBlogs = async () => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await axiosPublic(`/blogs?author=${_id}`);
+			const { data } = await axiosWithToken(`/blogs?author=${_id}`);
 			dispatch(getUserBlogSuccess(data.data));
 			// toastSuccessNotify("User blogs successfully fetched!")
 		} catch (error) {

@@ -31,7 +31,7 @@ export default function UpdateModal({open,handleClose,blogDetails}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <BlogForm initialValues={blogDetails} handleSubmit={handleSubmit}  />
+        <BlogForm blogDetails={blogDetails} handleSubmit={handleSubmit}  />
         </Box>
       </Modal>
     </div>

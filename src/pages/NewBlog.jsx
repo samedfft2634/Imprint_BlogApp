@@ -8,12 +8,8 @@ const NewBlog = () => {
 	const handleSubmit = (blogData) => {
 		postBlog(blogData);
 	};
-	const initialValues = {
-		categoryId: "65acf23e958b11aa21a2a430", 
-		isPublish: false, 
-	};
 	return (
-		<BlogForm initialValues={initialValues} handleSubmit={handleSubmit} />
+		<BlogForm blogDetails={false} handleSubmit={handleSubmit} />
 	);
 };
 

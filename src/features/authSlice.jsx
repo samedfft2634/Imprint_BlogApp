@@ -28,12 +28,17 @@ const authSlice = createSlice({
 		loginSuccess: (state, { payload }) => {
 			state.loading = false;
 			state.user.email = payload.user.email;
+			state.user.image = payload.user.image;
 			state.token = payload.token;
 			state.user._id = payload.user._id;
 		},
 		logoutSuccess: (state) => {
 			state.loading = false;
 			state.user.email = "";
+			state.user.username = "";
+			state.user.firstName = "";
+			state.user.lastName = "";
+			state.user.image = "";
 			state.token = "";
 		},
 		registerSuccess: (state, { payload }) => {

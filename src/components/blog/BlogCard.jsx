@@ -16,14 +16,29 @@ import IconButton from "@mui/material/IconButton";
 import { deepPurple, teal, yellow } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { customFormatDate } from "../../pages/Detail";
+import { useEffect } from "react";
+import useBlogCalls from "../../hooks/useBlogCalls";
 
 const BlogCard = () => {
 	const { EllipsisText } = globalStyles();
-	const { blogs, loading, error } = useSelector((state) => state.blog);
-
+	const { getBlogs } = useBlogCalls();
+	const { blogs, loading, error, pagination } = useSelector(
+		(state) => state.blog
+	);
+	const { limit, pages, totalRecords } = pagination;
 	const navigate = useNavigate();
 
+	const handlePagChange = (event , newPage) => {
+		getBlogs(`/blogs/?page=${newPage}&limit=${limit}`);
+	};
+
+	useEffect(() => {
+		getBlogs(`/blogs/?page=${pagination?.page}&limit=6`);
+	}, []);
+
+	console.log(pagination);
 	return (
+		
 		<Box
 			sx={{
 				width: "100%",
@@ -200,8 +215,17 @@ const BlogCard = () => {
 					</Card>
 				))}
 			</Container>
-			<Box width="100%"  sx={{display:"flex",justifyContent:"center"}}>
-				<Pagination count={10} color="secondary" size="large" />
+			<Box
+				width="100%"
+				sx={{ display: "flex", justifyContent: "center" }}
+			>
+				<Pagination
+					page={pages ? pages.current : 1}
+					onChange={handlePagChange}
+					count={Math.ceil(totalRecords / limit)}
+					color="secondary"
+					size="large"
+				/>
 			</Box>
 		</Box>
 	);

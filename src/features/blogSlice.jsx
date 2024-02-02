@@ -5,6 +5,7 @@ const initialState = {
   blogDetails:[],
   categories:[],
   userBlogs:[],
+  pagination:[],
   loading:false,
   error:false,
 }
@@ -23,7 +24,8 @@ const blogSlice = createSlice({
     getBlogSuccess:(state,{payload}) =>{
       state.loading = false
       state.error= false
-      state.blogs = payload.data
+      state.blogs = payload.blogData
+      state.pagination = payload.pagination
     },
     getCategorySuccess:(state,{payload}) =>{
       state.loading = false
