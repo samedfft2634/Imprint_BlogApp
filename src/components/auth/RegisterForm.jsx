@@ -48,7 +48,10 @@ export const registerSchema = object({
 	lastName: string()
 		.required("Last Name is a required field!")
 		.max(20, "Last Name must contains maximum 20 character."),
-	bio: string().required(),
+	bio: string()
+		.required("Bio is a required field!")
+		.min(20, "Bio must contains minimum 20 charachter!")
+		.max(200, "Bio can have a maximum of 200 characters!"),
 	image: string()
 		.url("Please enter a valid URL!")
 		.required("Image URL entry is required!"),
@@ -69,179 +72,188 @@ const RegisterForm = ({
 	// console.log(values);
 	return (
 		<Form>
-			<Box  noValidate sx={{ mt: 3 }}>
-			<Grid container spacing={2}>
-				<Grid item xs={12}>
-					<TextField
-						required
-						fullWidth
-						id="username"
-						label="Username"
-						name="username"
-						value={values.username}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.username && Boolean(errors.username)}
-						helperText={touched.username && errors.username}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<TextField
-						label="First Name"
-						name="firstName"
-						id="firstName"
-						required
-						fullWidth
-						value={values.firstName}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.firstName && Boolean(errors.firstName)}
-						helperText={touched.firstName && errors.firstName}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={6}>
-					<TextField
-						required
-						fullWidth
-						id="lastName"
-						label="Last Name"
-						name="lastName"
-						value={values.lastName}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.lastName && Boolean(errors.lastName)}
-						helperText={touched.lastName && errors.lastName}
-					/>
-				</Grid>
-
-				<Grid item xs={12}>
-					<TextField
-						required
-						fullWidth
-						label="Email Address"
-						id="email"
-						name="email"
-						type="email"
-						value={values.email}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.email && Boolean(errors.email)}
-						helperText={touched.email && errors.email}
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<TextField
-						required
-						fullWidth
-						label="Image"
-						id="image"
-						type="url"
-						name="image"
-						value={values.image}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.image && Boolean(errors.image)}
-						helperText={touched.image && errors.image}
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<TextField
-						required
-						fullWidth
-						id="bio"
-						label="Bio"
-						name="bio"
-						value={values.bio}
-						onChange={handleChange}
-						onBlur={handleBlur}
-						error={touched.bio && Boolean(errors.bio)}
-						helperText={touched.bio && errors.bio}
-					/>
-				</Grid>
-				<Grid item xs={12}>
-					<FormControl
-						sx={{ width: "100%" }}
-						variant="outlined"
-						error={touched.password && Boolean(errors.password)}
-					>
-						<InputLabel
-							
-							error={touched.password && Boolean(errors.password)}
-						>
-							Password
-						</InputLabel>
-						<OutlinedInput
-							label="Password"
-							id="password"
-							name="password"
-							value={values.password}
+			<Box noValidate sx={{ mt: 3 }}>
+				<Grid container spacing={2}>
+					<Grid item xs={12}>
+						<TextField
+							required
+							fullWidth
+							id="username"
+							label="Username"
+							name="username"
+							value={values.username}
 							onChange={handleChange}
 							onBlur={handleBlur}
-							error={touched.password && Boolean(errors.password)}
-							type={showPassword ? "text" : "password"}
-							endAdornment={
-								<InputAdornment position="end">
-									<IconButton
-										aria-label="toggle password visibility"
-										onClick={handleClickShowPassword}
-										onMouseDown={handleMouseDownPassword}
-										edge="end"
-										sx={{ color: deepPurple[400] }}
-									>
-										{showPassword ? (
-											<Visibility />
-										) : (
-											<VisibilityOff />
-										)}
-									</IconButton>
-								</InputAdornment>
-							}
+							error={touched.username && Boolean(errors.username)}
+							helperText={touched.username && errors.username}
 						/>
-						{touched.password && errors.password && (
-							<FormHelperText id="password-helper-text">
-								{errors.password}
-							</FormHelperText>
-						)}
-					</FormControl>
-				</Grid>
-			</Grid>
-			<Button
-				type="submit"
-				fullWidth
-				variant="contained"
-				sx={{
-					mt: 3,
-					mb: 2,
-					bgcolor: deepPurple[400],
-					":hover": {
-						bgcolor: deepPurple[300],
-					},
-				}}
-			>
-				Sign Up
-			</Button>
-			<Grid container justifyContent="flex-start">
-				<Grid item>
-					<Typography component="span">
-						<Link
-							to="/auth"
-							style={{ textDecoration: "none", color: "black" }}
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<TextField
+							label="First Name"
+							name="firstName"
+							id="firstName"
+							required
+							fullWidth
+							value={values.firstName}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={
+								touched.firstName && Boolean(errors.firstName)
+							}
+							helperText={touched.firstName && errors.firstName}
+						/>
+					</Grid>
+					<Grid item xs={12} sm={6}>
+						<TextField
+							required
+							fullWidth
+							id="lastName"
+							label="Last Name"
+							name="lastName"
+							value={values.lastName}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={touched.lastName && Boolean(errors.lastName)}
+							helperText={touched.lastName && errors.lastName}
+						/>
+					</Grid>
+
+					<Grid item xs={12}>
+						<TextField
+							required
+							fullWidth
+							label="Email Address"
+							id="email"
+							name="email"
+							type="email"
+							value={values.email}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={touched.email && Boolean(errors.email)}
+							helperText={touched.email && errors.email}
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							required
+							fullWidth
+							label="Image"
+							id="image"
+							type="url"
+							name="image"
+							value={values.image}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={touched.image && Boolean(errors.image)}
+							helperText={touched.image && errors.image}
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<TextField
+							required
+							fullWidth
+							id="bio"
+							label="Bio"
+							name="bio"
+							value={values.bio}
+							onChange={handleChange}
+							onBlur={handleBlur}
+							error={touched.bio && Boolean(errors.bio)}
+							helperText={touched.bio && errors.bio}
+						/>
+					</Grid>
+					<Grid item xs={12}>
+						<FormControl
+							sx={{ width: "100%" }}
+							variant="outlined"
+							error={touched.password && Boolean(errors.password)}
 						>
-							Already have an account?
-							<Typography
-								component="span"
-								variant="body2"
-								sx={{ color: "red" }}
+							<InputLabel
+								error={
+									touched.password && Boolean(errors.password)
+								}
 							>
-								Sign in
-							</Typography>
-						</Link>
-					</Typography>
+								Password
+							</InputLabel>
+							<OutlinedInput
+								label="Password"
+								id="password"
+								name="password"
+								value={values.password}
+								onChange={handleChange}
+								onBlur={handleBlur}
+								error={
+									touched.password && Boolean(errors.password)
+								}
+								type={showPassword ? "text" : "password"}
+								endAdornment={
+									<InputAdornment position="end">
+										<IconButton
+											aria-label="toggle password visibility"
+											onClick={handleClickShowPassword}
+											onMouseDown={
+												handleMouseDownPassword
+											}
+											edge="end"
+											sx={{ color: deepPurple[400] }}
+										>
+											{showPassword ? (
+												<Visibility />
+											) : (
+												<VisibilityOff />
+											)}
+										</IconButton>
+									</InputAdornment>
+								}
+							/>
+							{touched.password && errors.password && (
+								<FormHelperText id="password-helper-text">
+									{errors.password}
+								</FormHelperText>
+							)}
+						</FormControl>
+					</Grid>
 				</Grid>
-			</Grid>
-		</Box>
+				<Button
+					type="submit"
+					fullWidth
+					variant="contained"
+					sx={{
+						mt: 3,
+						mb: 2,
+						bgcolor: deepPurple[400],
+						":hover": {
+							bgcolor: deepPurple[300],
+						},
+					}}
+				>
+					Sign Up
+				</Button>
+				<Grid container justifyContent="flex-start">
+					<Grid item>
+						<Typography component="span">
+							<Link
+								to="/auth"
+								style={{
+									textDecoration: "none",
+									color: "black",
+								}}
+							>
+								Already have an account?
+								<Typography
+									component="span"
+									variant="body2"
+									sx={{ color: "red" }}
+								>
+									Sign in
+								</Typography>
+							</Link>
+						</Typography>
+					</Grid>
+				</Grid>
+			</Box>
 		</Form>
-		
 	);
 };
 

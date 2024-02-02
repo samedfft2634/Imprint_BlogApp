@@ -12,7 +12,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: "90%",
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius:"1rem",
   boxShadow: 24,
   p: 4,
 };
@@ -31,7 +31,7 @@ export default function UpdateModal({open,handleClose,blogDetails}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <BlogForm initialValues={blogDetails} handleSubmit={handleSubmit} />
+        <BlogForm initialValues={blogDetails} handleSubmit={handleSubmit}  />
         </Box>
       </Modal>
     </div>

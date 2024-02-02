@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import AboutImg from "../assets/ssg.jpg";
 import { AspectRatio } from "@mui/joy";
-import { blue, grey, indigo, pink, red } from "@mui/material/colors";
+import { blue, deepPurple, grey, indigo, pink, red } from "@mui/material/colors";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -17,13 +17,12 @@ import XIcon from "@mui/icons-material/X";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import PinterestIcon from "@mui/icons-material/Pinterest";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const About = () => {
-	const navigate = useNavigate();
 	return (
-		<Container maxWidth="lg" sx={{ mt: 4, mb: 0 }}>
-			<Card sx={{ p: 4 }}>
+		<Container maxWidth="lg" sx={{ mt: 4 }}>
+			<Card sx={{ p: 4, bgcolor: deepPurple[50] }}>
 				<Grid container spacing={{ xs: 2, md: 3, lg: 4 }}>
 					<Grid item xs={12} lg={6}>
 						<Typography

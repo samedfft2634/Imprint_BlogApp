@@ -11,6 +11,7 @@ import Register from "../pages/Register";
 import Detail from "../pages/Detail";
 import NotFound from "../pages/NotFound";
 import { Box } from '@mui/material';
+import { grey } from "@mui/material/colors";
 
 
 const AppRouter = () => {
@@ -20,6 +21,7 @@ const AppRouter = () => {
 				minHeight: "100vh",
 				display: "flex",
 				flexDirection: "column",
+				bgcolor:grey[300] 
 			}}
 		>
 			<Router>
