@@ -7,7 +7,7 @@ import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import { useSelector } from "react-redux";
 import Container from "@mui/material/Container";
-import { CardMedia } from "@mui/material";
+import { CardMedia, Pagination, Stack } from "@mui/material";
 import globalStyles from "../styles/globalStyles";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -17,13 +17,11 @@ import { deepPurple, teal, yellow } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { customFormatDate } from "../../pages/Detail";
 
-
-
 const BlogCard = () => {
 	const { EllipsisText } = globalStyles();
 	const { blogs, loading, error } = useSelector((state) => state.blog);
-  
-  const navigate = useNavigate()
+
+	const navigate = useNavigate();
 
 	return (
 		<Box
@@ -143,7 +141,9 @@ const BlogCard = () => {
 										}}
 									>
 										<VisibilityIcon />
-										<span>{blog?.countOfVisitors || 0 }</span>
+										<span>
+											{blog?.countOfVisitors || 0}
+										</span>
 									</IconButton>
 									<IconButton
 										aria-label="comment"
@@ -160,7 +160,9 @@ const BlogCard = () => {
 										}}
 									>
 										<ForumIcon sx={{}} />
-										<span>{blog?.comments.length || 0 }</span>
+										<span>
+											{blog?.comments.length || 0}
+										</span>
 									</IconButton>
 									<IconButton
 										aria-label="visible"
@@ -177,12 +179,14 @@ const BlogCard = () => {
 										}}
 									>
 										<ThumbUpIcon sx={{}} />
-										<span>{blog?.likes.length || 0 }</span>
+										<span>{blog?.likes.length || 0}</span>
 									</IconButton>
 								</Box>
 
 								<Button
-                onClick={()=> navigate(`/detail/${blog?._id}`)}
+									onClick={() =>
+										navigate(`/detail/${blog?._id}`)
+									}
 									variant="solid"
 									sx={{
 										bgcolor: deepPurple[200],
@@ -196,6 +200,9 @@ const BlogCard = () => {
 					</Card>
 				))}
 			</Container>
+			<Box width="100%"  sx={{display:"flex",justifyContent:"center"}}>
+				<Pagination count={10} color="secondary" size="large" />
+			</Box>
 		</Box>
 	);
 };

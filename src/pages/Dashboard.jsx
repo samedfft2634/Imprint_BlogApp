@@ -1,19 +1,18 @@
 import useBlogCalls from "../hooks/useBlogCalls";
 import { useEffect } from "react";
-import BlogCard from "../components/blog/BlogCard"
-import { useSelector } from "react-redux";
-
+import BlogCard from "../components/blog/BlogCard";
 
 
 const Dashboard = () => {
-  const {getBlogs} = useBlogCalls()
-  useEffect(()=>{
-    getBlogs()
-  },[])
+	const { getBlogs } = useBlogCalls();
+	useEffect(() => {
+		getBlogs();
+	}, []);
 	return (
-	 <>
-  <BlogCard />
-   </>
+		<>
+			<BlogCard />
+		
+		</>
 	);
 };
 
