@@ -63,6 +63,7 @@ const Detail = () => {
 		comments,
 		countOfVisitors,
 		userId,
+		categoryId,
 	} = blogDetails;
 	const { id } = useParams();
 	const [comment, setComment] = useState({
@@ -125,7 +126,7 @@ const Detail = () => {
 							fontWeight="xl"
 							sx={{ mb: 3 }}
 						>
-							{title}
+							{title}{"   "}{`#${categoryId?.name}`}
 						</Typography>
 						<Typography
 							level="body-sm"
@@ -237,7 +238,7 @@ const Detail = () => {
 									Delete Blog
 								</Button>
 								<DeleteModal open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} image={image} id={id} />
-								<UpdateModal open={updateModalOpen} handleClose={()=>setUpdateModalOpen(false)} />
+								<UpdateModal open={updateModalOpen} blogDetails={blogDetails} handleClose={()=>setUpdateModalOpen(false)} />
 							</Box>
 						</Box>}
 					</CardContent>

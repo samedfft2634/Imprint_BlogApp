@@ -1,7 +1,9 @@
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import NewBlog from "../../pages/NewBlog"
 import Modal from '@mui/material/Modal';
+import BlogForm from './BlogForm';
+import useBlogCalls from '../../hooks/useBlogCalls';
 
 const style = {
   position: 'absolute',
@@ -12,12 +14,14 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 2,
+  p: 4,
 };
 
-const UpdateModal = ({open,handleClose})=> {
- 
-
+export default function UpdateModal({open,handleClose,blogDetails}) {
+  const {putBlog} = useBlogCalls()
+  const handleSubmit = (blogData) => {
+    putBlog(blogData)
+  };
   return (
     <div>
       <Modal
@@ -27,10 +31,10 @@ const UpdateModal = ({open,handleClose})=> {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <NewBlog />
+        <BlogForm initialValues={blogDetails} handleSubmit={handleSubmit} />
         </Box>
       </Modal>
     </div>
   );
 }
-export default UpdateModal;
+
