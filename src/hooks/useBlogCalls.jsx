@@ -64,10 +64,21 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.post("/blogs/", userInfo);
 			toastSuccessNotify("New blog added!");
-			getBlogs();
+			getBlogs("blogs");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to post new blog!");
+			console.log(error);
+		}
+	};
+	const likeBlog = async (blogId) => {
+		try {
+			await axiosWithToken.post(`/blogs/${blogId}/postLike`);
+			await getBlogs("blogs");
+			await getBlogDetails()
+		} catch (error) {
+			dispatch(fetchFail());
+			toastErrorNotify("Failed to like the blog!");
 			console.log(error);
 		}
 	};
@@ -75,7 +86,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.put(`/blogs/${id}`, userInfo);
 			toastSuccessNotify("Blog successfully updated!");
-			getBlogs();
+			getBlogs("blogs");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to update the blog!");
@@ -86,7 +97,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.delete(`/blogs/${postId}`);
 			toastSuccessNotify("Blog was successfully deleted!");
-			getBlogs();
+			getBlogs("blogs");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to deleting blog!");
@@ -125,6 +136,7 @@ const useBlogCalls = () => {
 		getUserBlogs,
 		deleteBlog,
 		putBlog,
+		likeBlog,
 	};
 };
 

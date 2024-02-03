@@ -21,24 +21,28 @@ import useBlogCalls from "../../hooks/useBlogCalls";
 
 const BlogCard = () => {
 	const { EllipsisText } = globalStyles();
-	const { getBlogs } = useBlogCalls();
+	const { getBlogs, likeBlog } = useBlogCalls();
 	const { blogs, loading, error, pagination } = useSelector(
 		(state) => state.blog
 	);
-	const { limit, pages, totalRecords } = pagination;
+
 	const navigate = useNavigate();
 
-	const handlePagChange = (event , newPage) => {
-		getBlogs(`/blogs/?page=${newPage}&limit=${limit}`);
-	};
-
 	useEffect(() => {
-		getBlogs(`/blogs/?page=${pagination?.page}&limit=6`);
+		getBlogs(`/blogs/?page=${pagination?.page}&limit=${pagination?.limit}`);
 	}, []);
+	const handlePagChange = (event, newPage) => {
+		getBlogs(`/blogs/?page=${newPage}&limit=${pagination?.limit}`);
+	};
+	const pageCount = pagination.totalRecords && pagination.limit ? Math.ceil(pagination.totalRecords / pagination.limit) : 0;
 
-	console.log(pagination);
+	const handleLike = async(blogId)=>{
+		await likeBlog(blogId)
+
+	}
+	// console.log(pagination);
+	// console.log(typeof pagination?.totalRecords, typeof pagination?.limit);
 	return (
-		
 		<Box
 			sx={{
 				width: "100%",
@@ -174,7 +178,7 @@ const BlogCard = () => {
 											},
 										}}
 									>
-										<ForumIcon sx={{}} />
+										<ForumIcon />
 										<span>
 											{blog?.comments.length || 0}
 										</span>
@@ -193,7 +197,7 @@ const BlogCard = () => {
 											},
 										}}
 									>
-										<ThumbUpIcon sx={{}} />
+										<ThumbUpIcon onClick={()=> handleLike(blog?._id)}/>
 										<span>{blog?.likes.length || 0}</span>
 									</IconButton>
 								</Box>
@@ -220,9 +224,9 @@ const BlogCard = () => {
 				sx={{ display: "flex", justifyContent: "center" }}
 			>
 				<Pagination
-					page={pages ? pages.current : 1}
+					page={pagination?.pages ? pagination?.pages?.current : 1}
 					onChange={handlePagChange}
-					count={Math.ceil(totalRecords / limit)}
+					count={pageCount}
 					color="secondary"
 					size="large"
 				/>
