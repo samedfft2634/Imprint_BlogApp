@@ -20,7 +20,8 @@ const useBlogCalls = () => {
 		user: { _id },
 	} = useSelector((state) => state.auth);
 	// console.log(_id)
-
+	const { pagination } = useSelector((state) => state.blog);
+	// console.log(pagination);
 	const getBlogs = async (url) => {
 		dispatch(fetchStart());
 		try {
@@ -64,7 +65,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.post("/blogs/", userInfo);
 			toastSuccessNotify("New blog added!");
-			getBlogs("/blogs/");
+			getBlogs(`/blogs/?page=${pagination?.pages?.current}&limit=6`);
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to post new blog!");
@@ -74,7 +75,7 @@ const useBlogCalls = () => {
 	const likeBlog = async (blogId) => {
 		try {
 			await axiosWithToken.post(`/blogs/${blogId}/postLike`);
-			getBlogs("/blogs/");
+			getBlogs(`/blogs/?page=${pagination?.pages?.current}&limit=6`);
 			getBlogDetails(blogId);
 		} catch (error) {
 			dispatch(fetchFail());
@@ -86,7 +87,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.put(`/blogs/${id}`, userInfo);
 			toastSuccessNotify("Blog successfully updated!");
-			getBlogs("/blogs/");
+			getBlogs(`/blogs/?page=${pagination?.pages?.current}&limit=6`);
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to update the blog!");
@@ -97,7 +98,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.delete(`/blogs/${postId}`);
 			toastSuccessNotify("Blog was successfully deleted!");
-			getBlogs("/blogs/");
+			getBlogs(`/blogs/?page=${pagination?.pages?.current}&limit=6`);
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to deleting blog!");

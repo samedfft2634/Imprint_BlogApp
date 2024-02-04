@@ -51,7 +51,7 @@ const Detail = () => {
 		user: { _id },token
 	} = useSelector((state) => state.auth);
 	// console.log(_id);
-	const { getBlogDetails,postComment } = useBlogCalls();
+	const { getBlogDetails,postComment,likeBlog } = useBlogCalls();
 	const [show, setShow] = useState(false);
 	const {
 		title,
@@ -184,6 +184,7 @@ const Detail = () => {
 									<span>{comments?.length || 0}</span>
 								</IconButton>
 								<IconButton
+								onClick={()=> likeBlog(id)}
 									disabled={!token}
 									aria-label="visible"
 									sx={{

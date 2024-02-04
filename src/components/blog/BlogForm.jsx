@@ -26,7 +26,7 @@ const BlogForm = ({ blogDetails, handleSubmit }) => {
 		content: "",
 		image: "",
 		categoryId: "",
-		isPublis: false,
+		isPublish: false,
 	});
 
 	const handleChange = (e) => {

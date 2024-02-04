@@ -7,7 +7,7 @@ import Typography from "@mui/joy/Typography";
 import Sheet from "@mui/joy/Sheet";
 import { useSelector } from "react-redux";
 import Container from "@mui/material/Container";
-import { CardMedia, Pagination, Stack } from "@mui/material";
+import { CardMedia, Pagination } from "@mui/material";
 import globalStyles from "../styles/globalStyles";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -30,7 +30,6 @@ const BlogCard = () => {
 	const { token } = useSelector((state) => state.auth);
 
 	const navigate = useNavigate();
-
 	useEffect(() => {
 		getBlogs(`/blogs/?page=${pagination?.page}&limit=6`);
 	}, []);
@@ -135,6 +134,7 @@ const BlogCard = () => {
 										>
 											Created :
 											{customFormatDate(blog?.createdAt)}
+											
 										</Typography>
 										<Sheet
 											sx={{
