@@ -10,10 +10,9 @@ import MyBlogs from "../pages/MyBlogs";
 import Register from "../pages/Register";
 import Detail from "../pages/Detail";
 import NotFound from "../pages/NotFound";
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 import { grey } from "@mui/material/colors";
-
-
+import PrivateRouter from "./PrivateRouter";
 const AppRouter = () => {
 	return (
 		<Box
@@ -21,7 +20,7 @@ const AppRouter = () => {
 				minHeight: "100vh",
 				display: "flex",
 				flexDirection: "column",
-				bgcolor:grey[300] 
+				bgcolor: grey[300],
 			}}
 		>
 			<Router>
@@ -32,9 +31,11 @@ const AppRouter = () => {
 						<Route path="auth" element={<Login />} />
 						<Route path="register" element={<Register />} />
 						<Route path="about" element={<About />} />
-						<Route path="new-blog" element={<NewBlog />} />
-						<Route path="my-blogs" element={<MyBlogs />} />
-						<Route path="profile" element={<Profile />} />
+						<Route element={<PrivateRouter />}>
+							<Route path="new-blog" element={<NewBlog />} />
+							<Route path="my-blogs" element={<MyBlogs />} />
+							<Route path="profile" element={<Profile />} />
+						</Route>
 						<Route path="detail/:id" element={<Detail />} />
 						<Route path="*" element={<NotFound />} />
 					</Routes>

@@ -34,26 +34,25 @@ const Detail = () => {
 	//* For Update Modal ------------------------
 	const [updateModalOpen, setUpdateModalOpen] = useState(false);
 	const handleUpdateClick = () => {
-        setUpdateModalOpen(true);
-    };
+		setUpdateModalOpen(true);
+	};
 	//* ------------------------------------------
 	//? For Delete Modal -------------------------
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const handleDeleteClick = () => {
-        setDeleteModalOpen(true);
-    };
+		setDeleteModalOpen(true);
+	};
 	//? ------------------------------------------
 
-	
 	const { EllipsisText } = globalStyles();
 	const { blogDetails } = useSelector((state) => state.blog);
+
 	const {
-		user: { _id },
+		user: { _id },token
 	} = useSelector((state) => state.auth);
 	// console.log(_id);
-	const { getBlogDetails } = useBlogCalls();
+	const { getBlogDetails,postComment } = useBlogCalls();
 	const [show, setShow] = useState(false);
-	const { postComment } = useBlogCalls();
 	const {
 		title,
 		image,
@@ -126,7 +125,9 @@ const Detail = () => {
 							fontWeight="xl"
 							sx={{ mb: 3 }}
 						>
-							{title}{"   "}{`#${categoryId?.name}`}
+							{title}
+							{"   "}
+							{`#${categoryId?.name}`}
 						</Typography>
 						<Typography
 							level="body-sm"
@@ -164,6 +165,7 @@ const Detail = () => {
 									<span>{countOfVisitors}</span>
 								</IconButton>
 								<IconButton
+									disabled={!token}
 									onClick={() => setShow(!show)}
 									aria-label="comment"
 									sx={{
@@ -182,6 +184,7 @@ const Detail = () => {
 									<span>{comments?.length || 0}</span>
 								</IconButton>
 								<IconButton
+									disabled={!token}
 									aria-label="visible"
 									sx={{
 										"&:hover": {
@@ -195,7 +198,7 @@ const Detail = () => {
 										},
 									}}
 								>
-									<ThumbUpIcon sx={{}} />
+									<ThumbUpIcon />
 									<span>{likes?.length || 0}</span>
 								</IconButton>
 							</Box>
@@ -211,36 +214,51 @@ const Detail = () => {
 						</Button> */}
 						</Box>
 
-						{_id === userId?._id && <Box
-							sx={{
-								display: "flex",
-								gap: 1.5,
-								m:"auto",
-								my:2,
-								"& > button": { flex: 1 },
-							}}
-						>
-							<Box sx={{ display: "flex", gap: 2, flex: 2 }}>
-								<Button
-									variant="contained"
-									color="success"
-									startIcon={<CreateIcon />}
-									onClick={handleUpdateClick}
-								>
-									Update Blog
-								</Button>
-								<Button
-									variant="outlined"
-									color="error"
-									endIcon={<DeleteIcon />}
-									onClick={handleDeleteClick}
-								>
-									Delete Blog
-								</Button>
-								<DeleteModal open={deleteModalOpen} handleClose={()=>setDeleteModalOpen(false)} image={image} id={id} />
-								<UpdateModal open={updateModalOpen} blogDetails={blogDetails} handleClose={()=>setUpdateModalOpen(false)} />
+						{_id === userId?._id && (
+							<Box
+								sx={{
+									display: "flex",
+									gap: 1.5,
+									m: "auto",
+									my: 2,
+									"& > button": { flex: 1 },
+								}}
+							>
+								<Box sx={{ display: "flex", gap: 2, flex: 2 }}>
+									<Button
+										variant="contained"
+										color="success"
+										startIcon={<CreateIcon />}
+										onClick={handleUpdateClick}
+									>
+										Update Blog
+									</Button>
+									<Button
+										variant="outlined"
+										color="error"
+										endIcon={<DeleteIcon />}
+										onClick={handleDeleteClick}
+									>
+										Delete Blog
+									</Button>
+									<DeleteModal
+										open={deleteModalOpen}
+										handleClose={() =>
+											setDeleteModalOpen(false)
+										}
+										image={image}
+										id={id}
+									/>
+									<UpdateModal
+										open={updateModalOpen}
+										blogDetails={blogDetails}
+										handleClose={() =>
+											setUpdateModalOpen(false)
+										}
+									/>
+								</Box>
 							</Box>
-						</Box>}
+						)}
 					</CardContent>
 				</Grid>
 			</Grid>

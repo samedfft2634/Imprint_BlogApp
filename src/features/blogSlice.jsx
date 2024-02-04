@@ -17,10 +17,10 @@ const blogSlice = createSlice({
     fetchStart: (state) => {
 			state.loading = true;
 		},
-		fetchFail: (state) => {
-			state.loading = false;
-			state.error = true;
-		},
+    fetchFail: (state) => {
+      state.loading = false; 
+      state.error = true;
+    },
     getBlogSuccess:(state,{payload}) =>{
       state.loading = false
       state.error= false

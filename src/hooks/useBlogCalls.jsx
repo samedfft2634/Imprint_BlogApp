@@ -20,14 +20,14 @@ const useBlogCalls = () => {
 		user: { _id },
 	} = useSelector((state) => state.auth);
 	// console.log(_id)
-	
+
 	const getBlogs = async (url) => {
 		dispatch(fetchStart());
 		try {
 			const { data } = await axiosWithToken(url);
 			const blogData = data.data;
 			const pagination = data.details;
-			dispatch(getBlogSuccess({blogData,pagination}));
+			dispatch(getBlogSuccess({ blogData, pagination }));
 			// toastSuccessNotify("Blogs are successfully fetched")
 		} catch (error) {
 			dispatch(fetchFail());
@@ -35,10 +35,10 @@ const useBlogCalls = () => {
 			console.log(error);
 		}
 	};
-	const getBlogDetails = async () => {
+	const getBlogDetails = async (blogId) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await axiosPublic(`/blogs/${id}`);
+			const { data } = await axiosPublic(`/blogs/${id || blogId}`);
 			dispatch(getBlogDetailSuccess(data.data));
 			// toastSuccessNotify("Details are successfully fetched")
 		} catch (error) {
@@ -64,7 +64,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.post("/blogs/", userInfo);
 			toastSuccessNotify("New blog added!");
-			getBlogs("blogs");
+			getBlogs("/blogs/");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to post new blog!");
@@ -74,8 +74,8 @@ const useBlogCalls = () => {
 	const likeBlog = async (blogId) => {
 		try {
 			await axiosWithToken.post(`/blogs/${blogId}/postLike`);
-			await getBlogs("blogs");
-			await getBlogDetails()
+			getBlogs("/blogs/");
+			getBlogDetails(blogId);
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to like the blog!");
@@ -86,7 +86,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.put(`/blogs/${id}`, userInfo);
 			toastSuccessNotify("Blog successfully updated!");
-			getBlogs("blogs");
+			getBlogs("/blogs/");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to update the blog!");
@@ -97,7 +97,7 @@ const useBlogCalls = () => {
 		try {
 			await axiosWithToken.delete(`/blogs/${postId}`);
 			toastSuccessNotify("Blog was successfully deleted!");
-			getBlogs("blogs");
+			getBlogs("/blogs/");
 		} catch (error) {
 			dispatch(fetchFail());
 			toastErrorNotify("Failed to deleting blog!");
