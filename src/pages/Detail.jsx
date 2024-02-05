@@ -329,7 +329,7 @@ const Detail = () => {
 									}}
 								></Avatar>
 								<Box>
-									<Typography>{userId?.username}</Typography>
+									<Typography>{comment?.userId?.username}</Typography>
 									<Typography>
 										{customFormatDate(createdAt)}
 									</Typography>
