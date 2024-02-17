@@ -48,20 +48,7 @@ For validation , formik and yup used. So be careful when registiring and don't f
 - **Like-Comment:** If you have a favorite article, you can like it and leave a comment.
 - **Count-of-Visitors:** See that how many people reach your articles or share the most liked contents to your friends.
 - **Pagination:** Do not scroll down forever :) For seeing new articles, travel between the pages.
-  
 
-
-## 📸 Screenshots
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/1c3b6bd2-388b-4229-a745-26a69bec8c99" alt="MyBlogsScreenShot" > <br>
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/162fd27c-0558-4500-8625-c451dcd3fe6f" alt="Comments Screenshot" >
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/36479ced-12de-4666-8641-aa325a69c260" alt="Update Screenshot" >
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/8d8a3909-3636-4837-9c5a-c11a0fad123d" alt="Delete Screenshot" >
-
-### 📸 Screenshots/Skeletons
-
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/253857e2-1a73-412e-82ef-bb55fa8c1440" alt="Skeleton1" >
-
-<img src="https://github.com/samedfft2634/Imprint_BlogApp/assets/100915606/c330577f-0715-435c-89d6-f5dc8522f42d" alt="Skeleton2" >
 
 
 ## 🚀 Getting Started
